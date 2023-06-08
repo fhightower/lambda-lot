@@ -4,14 +4,12 @@ import sentry_sdk
 from sentry_sdk.integrations.aws_lambda import AwsLambdaIntegration
 
 sentry_sdk.init(
-    dsn=os.getenv('sentry_dsn'),
+    dsn=f"{os.getenv('sentry_dsn')}",
     integrations=[
         AwsLambdaIntegration(timeout_warning=True),
     ],
     traces_sample_rate=1.0,
 )
-
-print(os.getenv('sentry_dsn'))
 
 
 def lambda_handler(event, context):
