@@ -1,3 +1,6 @@
+import sentry_sdk
+
+
 def lambda_handler(event, context):
     query_strings = event.get('queryStringParameters') or {}
     count = 1
