@@ -1,11 +1,17 @@
 import os
 
 import sentry_sdk
+from sentry_sdk.integrations.aws_lambda import AwsLambdaIntegration
 
 sentry_sdk.init(
     dsn=os.getenv('sentry_dsn'),
+    integrations=[
+        AwsLambdaIntegration(timeout_warning=True),
+    ],
     traces_sample_rate=1.0,
 )
+
+print(os.getenv('sentry_dsn'))
 
 
 def lambda_handler(event, context):
@@ -15,6 +21,7 @@ def lambda_handler(event, context):
         try:
             count = int(qs_count)
         except ValueError as e:
+            print("Capturing exception!")
             sentry_sdk.capture_exception(e)
 
     response = {
