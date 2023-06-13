@@ -1,6 +1,6 @@
 import os
 
-from newrelic import agent
+# from newrelic import agent
 import sentry_sdk
 from sentry_sdk.integrations.aws_lambda import AwsLambdaIntegration
 
@@ -20,13 +20,11 @@ def lambda_handler(event, context):
         try:
             count = int(qs_count)
         except ValueError as e:
-            print("Capturing exception!")
             sentry_sdk.capture_exception(e)
-            agent.record_custom_event('Error', {'foo': 'bar'})
+            # agent.record_custom_event('Error', {'foo': 'bar'})
 
     response = {
         'statusCode': 200,
         'body': 'λ' * count
     }
     return response
-
