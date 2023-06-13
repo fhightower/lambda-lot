@@ -1,3 +1,4 @@
+import logging
 import os
 import random
 
@@ -20,10 +21,12 @@ def lambda_handler(event, context):
         try:
             count = int(qs_count)
         except ValueError as e:
+            logging.warning("Error converting to int!")
             sentry_sdk.capture_exception(e)
 
     # occassionally fail just to make life exciting
     if count == 1 and random.randint(1, 10) >= 6:
+        logging.error("Random error!")
         raise RuntimeError("Oppps!")
 
     response = {
