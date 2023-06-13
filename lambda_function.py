@@ -1,6 +1,5 @@
 import os
 
-from newrelic import agent
 import sentry_sdk
 from sentry_sdk.integrations.aws_lambda import AwsLambdaIntegration
 
@@ -11,9 +10,8 @@ sentry_sdk.init(
     ],
     traces_sample_rate=1.0,
 )
-agent.initialize()
 
-@agent.lambda_handler()
+
 def lambda_handler(event, context):
     query_strings = event.get('queryStringParameters') or {}
     count = 1
