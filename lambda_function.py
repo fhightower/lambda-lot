@@ -1,4 +1,5 @@
 import os
+import random
 
 import sentry_sdk
 from sentry_sdk.integrations.aws_lambda import AwsLambdaIntegration
@@ -20,6 +21,10 @@ def lambda_handler(event, context):
             count = int(qs_count)
         except ValueError as e:
             sentry_sdk.capture_exception(e)
+
+    # occassionally fail just to make life exciting
+    if count == 1 and random.randint(1, 10) >= 6:
+        raise RuntimeError("Oppps!")
 
     response = {
         'statusCode': 200,
