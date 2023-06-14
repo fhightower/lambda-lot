@@ -28,6 +28,9 @@ def lambda_handler(event, context):
     if count == 1 and random.randint(1, 10) >= 8:
         logging.error("Random error!")
         raise RuntimeError("Oppps!")
+    # occassionally fail just to make life exciting
+    elif count != 1 and random.randint(1, 10) >= 9:
+        unknown_quantity = 1 / 0
 
     response = {
         'statusCode': 200,
